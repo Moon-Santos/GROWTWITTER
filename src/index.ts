@@ -8,13 +8,28 @@ const mona = new User(
 	'Moon_Intruzo',
 	'12345'
 );
-const mona1 = new User(
+const gabriela = new User(
 	'Monã',
 	'monagabriel30@gmail.com',
-	'Moon_Intruze',
+	'Gabriela',
 	'12345'
 );
+const mariane = new User('Monã', 'monagabriel30@gmail.com', 'Mariane', '12345');
 
-console.log('--------------------');
-console.log(users);
-console.log('--------------------');
+mona.follow(gabriela);
+mona.follow(mariane);
+
+console.log('-----------------');
+mona.sendTweet('Sou muito Gostoso');
+mona.sendTweet('Estou muito Triste Hoje');
+mona.sendTweet('Quero gozar');
+console.log('-----------------');
+gabriela.sendTweet('SOu top');
+gabriela.sendTweet('Quero Chocolate');
+gabriela.sendTweet('Daria a vida por um doce hoje');
+console.log('---------------');
+mariane.sendTweet('arezzo é uma merda');
+mariane.sendTweet('gosto de air de casa');
+mariane.sendTweet('queria dar uma volta');
+
+mona.showFeed();
