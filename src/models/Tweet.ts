@@ -46,6 +46,7 @@ export class Tweet {
 	}
 
 	show() {}
+
 	showReplies() {
 		if (this._replys.length > 0) {
 			this.replys.forEach((reply) => {
