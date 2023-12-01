@@ -34,12 +34,19 @@ export class User {
 	}
 
 	follow(userToFollow: User) {
-		if (this._following.includes(userToFollow)) {
-			throw new Error(`Você já está seguindo o user ${userToFollow.username}`);
+		if (
+			this._following.includes(userToFollow) ||
+			userToFollow.username === this.username
+		) {
+			throw new Error(
+				`Você já está seguindo o user ${userToFollow.username}, e não pode seguir a si mesmo;`
+			);
 		}
 		userToFollow._followers.push(this);
 		this._following.push(userToFollow);
-		console.log(`${userToFollow.username} foi seguido por ${this.username}`);
+		console.log(
+			`<${userToFollow.username}> foi seguido por <${this.username}>`
+		);
 	}
 
 	showFeed() {
@@ -54,6 +61,7 @@ export class User {
 		this.tweets.forEach((tweet) => {
 			console.log(`<@${this.username}: ${tweet.content}>
             `);
+			console.log('---------------------');
 		});
 	}
 
