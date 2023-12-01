@@ -4,33 +4,47 @@ import { Tweet } from './Tweet';
 
 export class User {
 	private id: string;
-	private username: string;
+	private _username: string;
 	private _followers: User[] = [];
 	private _following: User[] = [];
-	private tweets: Tweet[] = [];
+	private _tweets: Tweet[] = [];
+	private _likedTweets: Tweet[] = [];
 	constructor(
 		private name: string,
 		private email: string,
-		username: string,
+		_username: string,
 		private password: string
 	) {
-		if (User.isUsernameTaken(username, users)) {
+		if (User.isUsernameTaken(_username, users)) {
 			throw new Error('Username já está em uso. Escolha outro.');
 		}
 
 		this.id = randomUUID();
-		this.username = username;
+		this._username = _username;
 		users.push(this);
 	}
 
-	get followers() {
+	get followers(): User[] {
 		return this._followers;
 	}
 
-	sendTweet(content: string) {
-		const newTweet = new Tweet(content, 'normal');
-		this.tweets.push(newTweet);
+	get username(): string {
+		return this._username;
+	}
+
+	get tweets(): Tweet[] {
+		return this._tweets;
+	}
+
+	get likedTweets(): Tweet[] {
+		return this._likedTweets;
+	}
+
+	sendTweet(content: string): Tweet {
+		const newTweet = new Tweet(content, 'normal', this);
+		this._tweets.push(newTweet);
 		console.log(`${this.name} Tweet sent.`);
+		return newTweet;
 	}
 
 	follow(userToFollow: User) {
@@ -57,10 +71,23 @@ export class User {
 			user.showTweets();
 		});
 	}
+
 	showTweets(): void {
-		this.tweets.forEach((tweet) => {
+		this._tweets.forEach((tweet) => {
 			console.log(`<@${this.username}: ${tweet.content}>
-            `);
+                  `);
+			if (tweet.likes >= 2) {
+				console.log(
+					`[${tweet.likedBy[0].username} and other ${
+						tweet.likedBy.length - 1
+					} user liked this]`
+				);
+			} else if (tweet.likes === 1) {
+				console.log(`[${tweet.likedBy[0].username} liked this]`);
+			}
+			if (tweet.replys.length !== 0) {
+				tweet.showReplies();
+			}
 			console.log('---------------------');
 		});
 	}
