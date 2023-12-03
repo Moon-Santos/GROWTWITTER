@@ -45,9 +45,11 @@ export class Tweet {
 		}
 	}
 
-	show() {}
+	show(): void {
+		console.log(`>@${this.author.username}: ${this._content}`);
+	}
 
-	showReplies() {
+	showReplies(): void {
 		if (this._replys.length > 0) {
 			this.replys.forEach((reply) => {
 				console.log(`> @${reply.author.username} - ${reply.content}`);
