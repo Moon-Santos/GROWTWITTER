@@ -1,5 +1,6 @@
 import { randomUUID } from 'crypto';
 import { User } from './User';
+import { tweets } from '../database/tweets';
 
 export class Tweet {
 	private id: string;
@@ -12,6 +13,7 @@ export class Tweet {
 		private author: User
 	) {
 		this.id = randomUUID();
+		tweets.push(this);
 	}
 	get content(): string {
 		return this._content;
